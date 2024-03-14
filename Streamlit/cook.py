@@ -19,6 +19,11 @@ def cook():
     background-color: #99ffcc;
     }
 
+    .stButton>button {
+    color: yellow;
+    background-color: green;
+    }
+
     </style>
     """,
     unsafe_allow_html=True,
@@ -61,26 +66,25 @@ def cook():
     if file_path:
         recipe = load_recipe_data(file_path)
 
-        ingredient = st.text_input("Enter an ingredient (all lower caps)and then click Recommend Recipe ")
+        st.markdown("<div style='font-size:24px;'>Enter an ingredient (all lower caps) and then click Recommend Recipe</div>", unsafe_allow_html=True)
+
+        ingredient = st.text_input("", key='ingredient')
 
         if st.button('Recommend Recipe (click here)'):
             recommended_recipe = recommend_recipe_with_ingredient(recipe, ingredient)
             if recommended_recipe is not None:
-                st.write("Good choice and let's make it")
-                st.write("Recommended recipe containing", ingredient + ":")
-                st.write("Recipe Name:", recommended_recipe['title'].iloc[0])
-                st.write("No of Cluster:", recommended_recipe['cluster'].iloc[0])
-                st.write("Ingredients to do:", recommended_recipe['ingredients'].iloc[0])
-                st.write("How to make it :", recommended_recipe['directions'].iloc[0])
+                st.write("Good choice and let's make it", style={"font-size": "40px", "color": "black"})
+                st.write("Recommended recipe containing", ingredient + ":", style={"font-size": "40px", "color": "black"})
+                st.write("Recipe Name:", recommended_recipe['title'].iloc[0], style={"font-size": "40px", "color": "black"})
+                st.write("No of Cluster:", recommended_recipe['cluster'].iloc[0], style={"font-size": "40px", "color": "black"})
+                st.write("Ingredients to do:", recommended_recipe['ingredients'].iloc[0], style={"font-size": "40px", "color": "black"})
+                st.write("How to make it :", recommended_recipe['directions'].iloc[0], style={"font-size": "40px", "color": "black"})
                 st.image('./images/Luigigo.jpg',width=200)    
             
                 with open("youtube.txt", "r") as file:
                     api_key = file.readline().split(':')[1].strip()
             
                 video_link = search_youtube_video(recommended_recipe['title'].iloc[0], api_key)
-                st.write("Let's watch the video to make it:", video_link)
+                st.write("Let's watch the video to make it:", video_link, style={"font-size": "40px", "color": "black"})
             else:
                 st.write("No recipes found with the ingredient:", ingredient)
-               
-            
-                
